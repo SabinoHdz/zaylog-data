@@ -3,15 +3,15 @@ const boom = require('@hapi/boom');
 //conexión normal
 //const getConnection = require('./../libs/postgres');
 
-const pool=require('./../libs/postgres.pool')
+const pool = require('./../libs/postgres.pool');
 class UserService {
   constructor() {
     this.users = [];
     this.generate();
-    this.pool=pool;
-    this.pool.on('error',(err)=>{
-      console.log('error',err);
-    })
+    this.pool = pool;
+    this.pool.on('error', (err) => {
+      console.log('error', err);
+    });
   }
   generate() {
     const limit = 10;
@@ -28,14 +28,14 @@ class UserService {
     }
   }
   async find() {
-   //Conexión sencilla;
+    //Conexión sencilla;
     // const cliente = await getConnection();
     // const rta = await cliente.query('SELECT * from task');
     // return rta.rows;
     //Conexión con pool
-    const query='SELECT * FROM task';
-    const rta=await this.pool.query(query);
-    return  rta.rows;
+    const query = 'SELECT * FROM task';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
   async findOne(id) {
     const user = this.users.find((user) => user.id === id);
