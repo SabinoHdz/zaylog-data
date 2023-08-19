@@ -4,7 +4,7 @@ const name = Joi.string().min(5).max(30);
 const description = Joi.string().min(5);
 const count = Joi.number().min(1).max(2);
 const image = Joi.string().uri();
-const price = Joi.number().precision();
+const price = Joi.number().precision(2);
 
 const createServiceSchema = Joi.object({
   name: name.required(),

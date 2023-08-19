@@ -3,6 +3,9 @@ class ProductsService{
     this.products=[];
     this.generate();
   }
+  generate(){
+
+  }
   async find(){
 
   }
