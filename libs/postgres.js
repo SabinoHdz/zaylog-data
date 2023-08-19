@@ -3,7 +3,7 @@ const getConnection = async () => {
   const client = new Client({
     host: 'localhost',
     port: 5432,
-    user:'sabino',
+    user: 'sabino',
     password: 'admin123',
     database: 'my_store',
   });
