@@ -24,53 +24,29 @@ class UserService {
     }
   }
   async find() {
-    //Conexión sencilla;
-    // const cliente = await getConnection();
-    // const rta = await cliente.query('SELECT * from task');
-    // return rta.rows;
-    //Conexión con pool
-
-    //conexion con sequealiz y pg
-    // const query = 'SELECT * FROM task';
-    // const [data, metadata] = await sequelize.query(query);
-    // return data;}
     const users = await models.User.findAll();
     console.log('get users:', users);
     return users;
   }
   async findOne(id) {
-    const user = this.users.find((user) => user.id === id);
+    const user = await models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('user not found');
     }
     return user;
   }
   async create(data) {
-    const newUser = {
-      id: faker.string.uuid(),
-      ...data,
-    };
-    this.users.push(newUser);
+    const newUser = await models.User.create(data);
     return newUser;
   }
   async update(id, changes) {
-    const index = this.users.findIndex((user = user.id === id));
-    if (index === -1) {
-      throw boom.notFound('user not found');
-    }
-    const user = this.user[index];
-    this.users[index] = {
-      ...user,
-      ...changes,
-    };
-    return this.users[index];
+    const user = await this.findOne(id);
+    const rta = await user.update(changes);
+    return rta;
   }
   async delete(id) {
-    const index = this.users.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('user not found');
-    }
-    this.users.splice(index, 1);
+    const user = await this.findOne(id);
+    await user.destroy(id);
     return { id };
   }
 }
