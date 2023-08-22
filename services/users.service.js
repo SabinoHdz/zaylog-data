@@ -3,7 +3,7 @@ const boom = require('@hapi/boom');
 //conexión normal
 //const getConnection = require('./../libs/postgres');
 
-const sequelize = require('./../libs/sequelize');
+const { models } = require('./../libs/sequelize');
 class UserService {
   constructor() {
     this.users = [];
@@ -29,9 +29,14 @@ class UserService {
     // const rta = await cliente.query('SELECT * from task');
     // return rta.rows;
     //Conexión con pool
-    const query = 'SELECT * FROM task';
-    const [data, metadata] = await sequelize.query(query);
-    return data;
+
+    //conexion con sequealiz y pg
+    // const query = 'SELECT * FROM task';
+    // const [data, metadata] = await sequelize.query(query);
+    // return data;}
+    const users = await models.User.findAll();
+    console.log('get users:', users);
+    return users;
   }
   async findOne(id) {
     const user = this.users.find((user) => user.id === id);
